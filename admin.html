@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Private inbox | Strength in Speaking</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:24px;background:#101b2a;color:#f5f7fa;font:16px/1.6 Arial,sans-serif}
+main{max-width:950px;margin:auto}
+h1,h2{color:#8bd4f0}
+.panel{background:#22364c;border:1px solid #40566d;border-radius:10px;padding:20px;margin:18px 0}
+input,textarea{width:100%;padding:12px;border-radius:6px;border:1px solid #71869a;font:inherit}
+textarea{min-height:110px}
+button{padding:11px 18px;background:#72c5e6;border:0;border-radius:6px;font-weight:bold;cursor:pointer;margin-top:10px}
+.item{padding:14px;background:#142337;border-radius:7px;margin:10px 0;cursor:pointer}
+.item:hover{outline:2px solid #72c5e6}
+.msg{padding:12px;background:#142337;border-radius:7px;margin:10px 0;overflow-wrap:anywhere}
+.muted{color:#cbd5df}
+#status{white-space:pre-wrap}
+</style>
+</head>
+<body>
+<main>
+<a href="/" style="color:#8bd4f0">← Back to website</a>
+<h1>Private message inbox</h1>
+<p class="muted">Only the site owner should sign in here. Keep your password private and use a strong, unique password.</p>
+
+<div class="panel" id="login-panel">
+<h2>Owner sign in</h2>
+<form id="login-form">
+<label for="password">Owner password</label>
+<input id="password" type="password" autocomplete="current-password" required>
+<button>Sign in</button>
+</form>
+</div>
+
+<div id="inbox" hidden>
+<button id="logout" type="button">Sign out</button>
+<div class="panel">
+<h2>Conversations</h2>
+<div id="list"></div>
+</div>
+<div class="panel">
+<h2>Selected conversation</h2>
+<div id="thread"></div>
+<form id="reply-form">
+<label for="reply">Your reply</label>
+<textarea id="reply" maxlength="4000" required></textarea>
+<button>Send private reply</button>
+</form>
+</div>
+</div>
+
+<p id="status" role="status" aria-live="polite"></p>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+let selected="";
+
+async function call(path,method="GET",data){
+const r=await fetch(path,{
+method,
+headers:data?{"Content-Type":"application/json"}:{},
+body:data?JSON.stringify(data):undefined,
+credentials:"same-origin"
+});
+const d=await r.json().catch(()=>({error:"Unexpected server response"}));
+if(!r.ok)throw Error(d.error||"Request failed");
+return d;
+}
+
+function msg(m){
+const el=document.createElement("div");
+el.className="msg";
+const b=document.createElement("strong");
+b.textContent=m.sender==="owner"?"You replied":"Visitor";
+const p=document.createElement("p");
+p.textContent=m.body;
+const t=document.createElement("small");
+t.textContent=new Date(m.created_at).toLocaleString();
+el.append(b,p,t);
+$("thread").append(el);
+}
+
+async function loadList(){
+const d=await call("/api/admin/messages");
+$("list").replaceChildren();
+if(!d.conversations.length){
+$("list").textContent="No messages yet.";
+return;
+}
+d.conversations.forEach(c=>{
+const e=document.createElement("div");
+e.className="item";
+e.textContent=new Date(c.updated_at).toLocaleString()+" — "+(c.latest_body||"Conversation");
+e.addEventListener("click",()=>openThread(c.id));
+$("list").append(e);
+});
+}
+
+async function openThread(id){
+selected=id;
+const d=await call("/api/admin/thread","POST",{id});
+$("thread").replaceChildren();
+d.messages.forEach(msg);
+}
+
+$("login-form").addEventListener("submit",async e=>{
+e.preventDefault();
+$("status").textContent="Signing in…";
+try{
+await call("/api/admin/login","POST",{password:$("password").value});
+$("password").value="";
+$("login-panel").hidden=true;
+$("inbox").hidden=false;
+await loadList();
+$("status").textContent="Signed in.";
+}catch(x){
+$("status").textContent=x.message;
+}
+});
+
+$("logout").addEventListener("click",async()=>{
+try{await call("/api/admin/logout","POST",{});}catch{}
+$("inbox").hidden=true;
+$("login-panel").hidden=false;
+$("thread").replaceChildren();
+selected="";
+$("status").textContent="Signed out.";
+});
+
+$("reply-form").addEventListener("submit",async e=>{
+e.preventDefault();
+if(!selected){
+$("status").textContent="Choose a conversation first.";
+return;
+}
+try{
+await call("/api/admin/reply","POST",{id:selected,body:$("reply").value});
+$("reply").value="";
+await openThread(selected);
+await loadList();
+$("status").textContent="Reply sent.";
+}catch(x){
+$("status").textContent=x.message;
+}
+});
+
+(async()=>{
+try{
+await loadList();
+$("login-panel").hidden=true;
+$("inbox").hidden=false;
+$("status").textContent="Your owner session is active.";
+}catch{}
+})();
+</script>
+</body>
+</html>
