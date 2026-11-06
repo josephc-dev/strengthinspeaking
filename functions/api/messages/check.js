@@ -4,8 +4,7 @@ import {
   codeHash,
   rateLimit,
   validOrigin
-} from "../../_lib/common.js";
-} from "../../../common.js";
+} from "../../../common.js"; 
 export async function onRequestPost({request,env}) {
   if(!validOrigin(request)) {
     return json({error:"Request not allowed."},403);
