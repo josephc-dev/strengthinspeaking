@@ -1,12 +1,187 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strength in Speaking</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strength in Speaking | Men's Mental Health</title>
+<style>
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #101b2a;
+  color: #f5f7fa;
+  line-height: 1.7;
+}
+header {
+  padding: 20px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background: #142337;
+}
+.logo { font-size: 21px; font-weight: bold; }
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 8px;
+}
+nav a:hover { color: #75c6e8; }
+.hero {
+  text-align: center;
+  padding: 110px 20px;
+  background: linear-gradient(135deg,#142337,#244767);
+}
+.hero h1 { font-size: clamp(38px,7vw,65px); margin: 0; }
+.hero p { font-size: 21px; max-width: 650px; margin: 20px auto; }
+.btn {
+  display: inline-block;
+  background: #72c5e6;
+  color: #101b2a;
+  padding: 13px 25px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 8px;
+}
+section { padding: 65px 9%; }
+section h2 { font-size: 32px; color: #8bd4f0; }
+.light { background: #192a3e; }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 20px;
+}
+.card {
+  background: #22364c;
+  padding: 24px;
+  border-radius: 10px;
+}
+.card h3 { color: #8bd4f0; }
+.support {
+  background: #213c51;
+  border-left: 5px solid #72c5e6;
+  padding: 22px;
+  margin: 20px 0;
+  border-radius: 6px;
+}
+a { color: #8bd4f0; }
+footer {
+  text-align: center;
+  padding: 30px;
+  background: #0b1420;
+  color: #cbd5df;
+}
+</style>
 </head>
 <body>
-    <h1>Strength in Speaking</h1>
-    <p>It's okay not to be okay. You are not alone.</p>
+
+<header>
+  <div class="logo">STRENGTH IN SPEAKING</div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#mental-health">Mental Health</a>
+    <a href="#support">Get Support</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>Strength in Speaking.</h1>
+  <p>It's okay not to be okay. You don't have to fight your battles alone.</p>
+  <p>Breaking the silence around men's mental health and suicide prevention.</p>
+  <a class="btn" href="#support">Find Support</a>
+  <a class="btn" href="#about">Our Mission</a>
+</div>
+
+<section id="about">
+  <h2>Our Mission</h2>
+  <p>
+    Strength in Speaking exists to help break the silence surrounding
+    men's mental health.
+  </p>
+  <p>
+    Too many men feel they have to hide their struggles, pretend
+    everything is fine or face difficult times alone.
+  </p>
+  <p>
+    We believe speaking up is a sign of strength. Everyone deserves
+    to be heard, supported and reminded that their life matters.
+  </p>
+</section>
+
+<section class="light" id="mental-health">
+  <h2>You Are Not Alone</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>Depression</h3>
+      <p>You don't have to hide how you're feeling. There is support available.</p>
+    </div>
+    <div class="card">
+      <h3>Anxiety</h3>
+      <p>Feeling overwhelmed or constantly worried doesn't make you weak.</p>
+    </div>
+    <div class="card">
+      <h3>Loneliness</h3>
+      <p>You deserve friendship, connection and someone who will listen.</p>
+    </div>
+    <div class="card">
+      <h3>Asking for Help</h3>
+      <p>Starting a conversation can be difficult, but it can be an important first step.</p>
+    </div>
+  </div>
+</section>
+
+<section id="support">
+  <h2>Help Is Always Worth Reaching For</h2>
+  <p>If you're struggling, please consider reaching out. You deserve support.</p>
+
+  <div class="support">
+    <h3>Immediate danger</h3>
+    <p>If you or someone else is in immediate danger, call 999 or go to A&E.</p>
+    <a class="btn" href="tel:999">Call 999</a>
+  </div>
+
+  <div class="support">
+    <h3>Samaritans</h3>
+    <p>Free listening support, day or night, for anyone who needs someone to talk to.</p>
+    <a href="tel:116123">Call 116 123</a>
+    <p><a href="https://www.samaritans.org/">Visit Samaritans</a></p>
+  </div>
+
+  <div class="support">
+    <h3>Shout</h3>
+    <p>Free, confidential text support, available 24 hours a day in the UK.</p>
+    <p>Text SHOUT to <strong>85258</strong>.</p>
+    <a href="https://giveusashout.org/">Visit Shout</a>
+  </div>
+
+  <div class="support">
+    <h3>NHS Mental Health Support</h3>
+    <p>In England, call NHS 111 and select the mental health option for urgent mental health support.</p>
+    <a href="https://www.nhs.uk/nhs-services/mental-health-services/where-to-get-urgent-help-for-mental-health/">
+      NHS urgent mental health help
+    </a>
+  </div>
+</section>
+
+<section class="light">
+  <h2>Remember This</h2>
+  <p>
+    You are not weak for struggling.
+    You are not a burden for asking for help.
+    You are not alone.
+  </p>
+  <h2>There is strength in speaking.</h2>
+</section>
+
+<footer>
+  <p>Strength in Speaking</p>
+  <p>Breaking the silence. Saving lives. Supporting men.</p>
+  <p>© 2026 Strength in Speaking</p>
+</footer>
+
 </body>
 </html>
